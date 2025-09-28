@@ -1,1 +1,19 @@
-
+class BinomialHeap:  
+    def __init__(self):  
+        self.trees = []  
+  
+    def insert(self, key):  
+        new_tree = Tree(key)  
+        self.trees.append(new_tree)  
+        self._heapify()  
+  
+    def _heapify(self):  
+        self.trees.sort(key=lambda x: x.key)  
+  
+    class Tree:  
+        def __init__(self, key):  
+            self.key = key  
+            self.children = []  
+  
+        def merge(self, other):  
+            self.children.append(other)  
