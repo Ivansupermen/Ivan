@@ -1,0 +1,53 @@
+class FibonacciHeap:  
+    def __init__(self):  
+        self.min_node = None  
+        self.nodes = []  
+  
+    def insert(self, key):  
+        new_node = Node(key)  
+        self.nodes.append(new_node)  
+        if not self.min_node or key < self.min_node.key:  
+            self.min_node = new_node  
+  
+    def merge(self, other_heap):  
+        if not other_heap.min_node:  
+            return  
+        for node in other_heap.nodes:  
+            self.insert(node.key)  
+  
+    def extract_min(self):  
+        if not self.min_node:  
+            raise Exception("Heap is empty")  
+        min_key = self.min_node.key  
+        for i, node in enumerate(self.nodes):  
+            if node.key == min_key:  
+                self.nodes[i] = None  # Удаляем узел из списка  
+                break  
+        self.min_node = None  
+        for node in self.nodes:  
+            if self.min_node is None or node.key < self.min_node.key:  
+                self.min_node = node  
+        return min_key  
+  
+    def decrease_key(self, node_index, new_key):  
+        if node_index < 0 or node_index >= len(self.nodes):  
+            raise Exception("Invalid node index")  
+        self.nodes[node_index].key = new_key  
+        if self.min_node and new_key < self.min_node.key:  
+            self.min_node = self.nodes[node_index]  
+  
+class Node:  
+    def __init__(self, key):  
+        self.key = key  
+        self.child = None  
+        self.left = self  
+        self.right = self  
+  
+    def __repr__(self):  
+        return f"Node({self.key})"  
+  
+# Пример использования  
+fib_heap = FibonacciHeap()  
+fib_heap.insert(5)  
+fib_heap.insert(3)  
+fib_heap.insert(1)  
